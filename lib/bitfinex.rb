@@ -156,7 +156,7 @@ class Bitfinex
 
       resp = self.class.post(url, :headers => headers_for(url, options)).parsed_response
     rescue => e
-      puts e
+      raise "Error getting balance_history: #{e.message}: #{e.inspect}"
     end
 
     resp
@@ -177,7 +177,7 @@ class Bitfinex
     begin
       resp = self.class.post(url, :headers => headers_for(url, options)).parsed_response
     rescue => e
-      puts e
+      raise "Error getting history_movements: #{e.message}: #{e.inspect}"
     end
 
     resp
@@ -205,7 +205,7 @@ class Bitfinex
         hist << txm
       }
     rescue => e
-      puts e
+      raise "Error getting history: #{e.message}: #{e.inspect}"
     end
     hist.reverse! if opts[:reverse]
     hist
@@ -338,7 +338,7 @@ class Bitfinex
         raise (defined? res.parsed_response[0]['status']) ? res.parsed_response[0]['status'] : res.parsed_response['status']
       end
     rescue => e
-      raise "Error submitting withdraw request: #{e}"
+      raise "Error submitting withdraw request: #{e.message}: #{e.inspect}"
     end
 
     res.parsed_response
@@ -385,7 +385,7 @@ class Bitfinex
         raise  msg
       end
     rescue => e
-      raise "Error submitting order: #{e}"
+      raise "Error submitting order: #{e.message}: #{e.inspect}"
     end
     om = Hashie::Mash.new(res.parsed_response)
     if @buy_orders[om.order_id] || @sell_orders[om.order_id]
@@ -538,7 +538,7 @@ class Bitfinex
       }
       return tr.reverse
     rescue => e
-      puts "Bitfinex.trades error:#{e}"
+      puts "Bitfinex.trades error: #{e.message}: #{e.inspect}"
     end
   end
 
