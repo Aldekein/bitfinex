@@ -33,10 +33,11 @@ class Bitfinex
   base_uri 'https://api.bitfinex.com'
   format :json
 
-  def initialize(key=nil, secret=nil)
+  def initialize(key=nil, secret=nil, base_uri=nil)
     @debug = true if ENV['DEBUG']
     @key = key
     @secret = secret
+    self.base_uri(base_uri) if base_uri
     unless have_key?
       begin
         cfg_file = File.join(File.dirname(__FILE__), '..',
