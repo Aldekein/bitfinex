@@ -37,7 +37,7 @@ class Bitfinex
     @debug = true if ENV['DEBUG']
     @key = key
     @secret = secret
-    self.base_uri(base_uri) if base_uri
+    self.class.base_uri(base_uri) if base_uri
     unless have_key?
       begin
         cfg_file = File.join(File.dirname(__FILE__), '..',
